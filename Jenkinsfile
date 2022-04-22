@@ -29,8 +29,6 @@ pipeline {
 
  
       stage('Run publish') {
-        script {
-          if(env.BRANCH_NAME == "dockeragent") {
                 parallel {
                     stage('package') {
                       agent {
@@ -38,6 +36,10 @@ pipeline {
                           image 'maven:3.6.3-jdk-11-slim'
                         }
 
+                      }
+                      when {
+                          beforeAgent true
+                          branch 'dockeragent'
                       }
                       post {
                         always {
@@ -55,6 +57,10 @@ pipeline {
 
                     stage('Docker push') {
                       agent any
+                      when {
+                          beforeAgent true
+                          branch 'dockeragent'
+                      }
                         steps {
                             script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
@@ -68,11 +74,6 @@ pipeline {
                         }
                     }
                 }
-          }
-            else {
-            println "skipping"
-          }
-        }
       } 
   }
 }
