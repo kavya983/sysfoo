@@ -14,18 +14,18 @@ pipeline {
       }
     }
 
-    stage('test') {
-      agent {
-        docker {
-          image 'maven:3.6.3-jdk-11-slim'
-        }
+    // stage('test') {
+    //   agent {
+    //     docker {
+    //       image 'maven:3.6.3-jdk-11-slim'
+    //     }
 
-      }
-      steps {
-        echo 'testing'
-        sh 'mvn clean test'
-      }
-    }
+    //   }
+    //   steps {
+    //     echo 'testing'
+    //     sh 'mvn clean test'
+    //   }
+    // }
 
  
       stage('Run publish') {
