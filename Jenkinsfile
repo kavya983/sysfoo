@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent none
   stages {
     stage('package') {
       agent {
@@ -23,6 +23,7 @@ pipeline {
     }
 
     stage('Docker push') {
+      agent any
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
