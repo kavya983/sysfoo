@@ -40,16 +40,11 @@ pipeline {
         echo 'done'
       }
     }
-
-  }
-  tools {
-    maven 'Maven 3.6.3'
   }
   post {
     always {
       echo 'This pipeline is completed..'
       archiveArtifacts(artifacts: 'target/*.war', followSymlinks: false)
     }
-
   }
 }
