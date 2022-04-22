@@ -29,6 +29,9 @@ pipeline {
 
  
       stage('Run publish') {
+                when {
+                    branch 'master'
+                }
                 parallel {
                     stage('package') {
                       agent {
@@ -36,10 +39,6 @@ pipeline {
                           image 'maven:3.6.3-jdk-11-slim'
                         }
 
-                      }
-                      when {
-                          beforeAgent true
-                          branch 'master'
                       }
                       post {
                         always {
@@ -57,10 +56,6 @@ pipeline {
 
                     stage('Docker push') {
                       agent any
-                      when {
-                          beforeAgent true
-                          branch 'master'
-                      }
                         steps {
                             script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
